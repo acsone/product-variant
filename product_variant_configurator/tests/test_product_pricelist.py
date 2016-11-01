@@ -92,6 +92,7 @@ class TestProductPriceList(SavepointCase):
                     (0, False, {
                         'name': 'Rule 20% on ipad product',
                         'product_id': cls.ipad_product.id,
+                        'categ_id': cls.ipad_categry.id,
                         'sequence': 1,
                         'base': 2,
                         'price_discount': -0.2
@@ -99,6 +100,7 @@ class TestProductPriceList(SavepointCase):
                     (0, False, {
                         'name': 'Rule 10% on ipad template ',
                         'product_tmpl_id': cls.ipad_template.id,
+                        'categ_id': cls.apple_category.id,
                         'base': 2,
                         'price_discount': -0.1
                     }),
@@ -122,6 +124,10 @@ class TestProductPriceList(SavepointCase):
             uom=self.ipad_product.uom_po_id.id, date='2016-01-01'
         ).price_get(self.ipad_product.id, 1)[self.pricelist.id]
 
+        self.assertEqual(price, 500 * 0.8)
+
+        #Price for ipad product without context
+        price = self.pricelist.price_get(self.ipad_product.id, 1)[self.pricelist.id]
         self.assertEqual(price, 500 * 0.8)
 
         # Price for iphone template without partner
