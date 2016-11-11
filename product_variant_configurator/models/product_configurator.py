@@ -237,10 +237,26 @@ class ProductConfigurator(models.AbstractModel):
         self.ensure_one()
         # TODO: search for existing product matching the attribute values
         values = self.product_attribute_ids.mapped('value_id.id')
-        return self.env['product.product'].create({
+        # When an object inheriting from mail.thread is created, the creation
+        # of followers causes the invalidation of all caches. (
+        # call to self.invalidate_cache in overridden methods *unlink* and
+        # *create*) The cache invalidation remove all instances from the cache
+        # even in memory instance. The deletion of these in memory instances
+        # has for consequence that some computed fields or values
+        # initialized  by a call to onchange are no more computed if these
+        # methods rely on the values stored in these in memory records. It's
+        # clearly a bug in Odoo and is not tied to the current case but
+        # since we are not able to provide a solution for all the cases we
+        # implement a specific work around by taking a copy of the cache
+        # before the call to create and restoring the cache after the create
+        # https://github.com/odoo/odoo/issues/14275
+        cache = self.env.cache.copy()
+        ret = self.env['product.product'].create({
             'product_tmpl_id': self.product_tmpl_id.id,
             'attribute_value_ids': [(4, value) for value in values]
         })
+        self.env.cache.update(cache)
+        return ret
 
     @api.multi
     def _create_variant_from_vals(self, vals):
