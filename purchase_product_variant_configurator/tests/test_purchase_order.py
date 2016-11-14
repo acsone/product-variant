@@ -206,7 +206,8 @@ class TestPurchaseOrder(SavepointCase):
         order = self.purchase_order.create({
             'partner_id': self.supplier.id,
 
-            'order_line': [(0, 0, {
+        })
+        line_1 = self.purchase_order_line.new({
                 'product_tmpl_id': self.product_template_yes.id,
                 'price_unit': 100,
                 'name': 'Line 1',
@@ -219,16 +220,20 @@ class TestPurchaseOrder(SavepointCase):
                     'value_id': self.value1.id,
                     'owner_model': 'purchase.order.line'
                 })]
-            }), (0, 0, {
+            })
+        line_2 = self.purchase_order_line.new({
                 'product_tmpl_id': self.product_template_no.id,
                 'product_uom': self.product_template_no.uom_id.id,
                 'product_qty': 1,
                 'price_unit': 200,
                 'name': 'Line 2',
                 'date_planned': '2016-01-01',
-            })]
-        })
+            })
 
+        for line in (line_1, line_2):
+            line.self.create_variant_if_needed()
+            
+        order.write({'order_line': [(4, line_1.id), (4, line_2.id)]})
         order.button_confirm()
 
         order_line_without_product = order.order_line.filtered(
