@@ -17,7 +17,6 @@ class PurchaseOrder(models.Model):
         lines_without_product = self.order_line.filtered(
             lambda x: not x.product_id and x.product_tmpl_id)
 
-        lines_without_product.check_configuration_validity()
         for line in lines_without_product:
 
             product = product_obj._product_find(
