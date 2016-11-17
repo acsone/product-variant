@@ -6,28 +6,26 @@
 Invoice Product Variant Configurator
 ====================================
 
-Product variant configurator on invoice lines
+Product variant configurator on invoice lines.
 
 Installation
 ============
 
-To install this module, you need to:
-
-#. Do this ...
+There is no specific installation instructions for this module.
 
 Configuration
 =============
 
-To configure this module, you need to:
+The module is usable without configuration. On invoice forms, when adding
+or modifying lines, the user can specify attribute values so the system
+will select the correct product automatically, or propose to create a
+new product variant if no corresponding variant exists.
 
-#. Go to ...
+With this module, it is best to set the "Variant creations" option
+on product templates to "Don't create them automatically".
 
 Usage
 =====
-
-To use this module, you need to:
-
-#. Go to ...
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -39,13 +37,13 @@ To use this module, you need to:
 Known issues / Roadmap
 ======================
 
-* ...
+* Nothing here yet
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/OCA/product-variant/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
@@ -60,8 +58,7 @@ Images
 Contributors
 ------------
 
-* Firstname Lastname <email.address@example.org>
-* Second Person <second.person@example.org>
+* Stéphane Bidoul <stephane.bidoul@acsone.eu>
 
 Maintainer
 ----------
