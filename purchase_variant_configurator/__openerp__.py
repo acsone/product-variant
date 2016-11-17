@@ -17,13 +17,6 @@
               "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
               "ACSONE SA/NV,"
               "Odoo Community Association (OCA)",
-    "contributors": [
-        "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
-        "David Díaz <d.diazp@gmail.com>",
-        "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Ana Juaristi <ajuaristio@gmail.com>",
-        "Zakaria Makrelouf(Acsone) <z.makrelouf@gmail.com>",
-    ],
     "category": "Purchase Management",
     "website": "http://www.odoomrp.com",
     "data": [
