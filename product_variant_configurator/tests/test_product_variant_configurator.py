@@ -194,10 +194,6 @@ class TestProductVariantConfigurator(SavepointCase):
         self.category1.no_create_variants = False
         self.assertEqual(len(tmpl.product_variant_ids), 2)
 
-    def test_open_attribute_prices(self):
-        result = self.product_template_yes.action_open_attribute_prices()
-        self.assertEqual(result['type'], 'ir.actions.act_window')
-
     def test_get_product_attributes_dict(self):
         attrs_dict = self.product_template_yes._get_product_attributes_dict()
         self.assertEqual(len(attrs_dict), 1)
@@ -205,12 +201,11 @@ class TestProductVariantConfigurator(SavepointCase):
 
     def test_get_product_description(self):
         product = self.product_product.create({
-            'name': 'Test product',
             'product_tmpl_id': self.product_template_yes.id
         })
         self.assertEqual(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
-            'Test product')
+            'Product template 1')
         self.current_user = self.env.user
         # Add current user to group: group_supplier_inv_check_total
         group_id = (
@@ -219,7 +214,7 @@ class TestProductVariantConfigurator(SavepointCase):
         self.env.ref(group_id).write({'users': [(4, self.current_user.id)]})
         self.assertEqual(product._get_product_description(
             product.product_tmpl_id, product, product.attribute_value_ids),
-            'Test product')
+            'Product template 1')
 
     def test_product_check_configuration_validity(self):
         product = self.product_product.create({

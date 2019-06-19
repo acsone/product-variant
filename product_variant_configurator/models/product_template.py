@@ -66,22 +66,6 @@ class ProductTemplate(models.Model):
                 super(ProductTemplate, tmpl).create_variant_ids()
         return True
 
-    @api.multi
-    def action_open_attribute_prices(self):
-        self.ensure_one()
-        price_obj = self.env['product.attribute.price']
-        for line in self.attribute_line_ids:
-            for value in line.value_ids:
-                prices = price_obj.search([('product_tmpl_id', '=', self.id),
-                                           ('value_id', '=', value.id)])
-                if not prices:
-                    price_obj.create({
-                        'product_tmpl_id': self.id,
-                        'value_id': value.id,
-                    })
-        return self.env.ref('product_variant_configurator.'
-                            'attribute_price_action').read()[0]
-
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
         # Make a search with default criteria
