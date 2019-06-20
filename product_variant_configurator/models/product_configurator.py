@@ -12,6 +12,7 @@ _logger = logging.getLogger(__name__)
 
 class ProductConfigurator(models.AbstractModel):
     _name = 'product.configurator'
+    _description = 'Product Configurator'
 
     product_tmpl_id = fields.Many2one(
         string='Product Template',

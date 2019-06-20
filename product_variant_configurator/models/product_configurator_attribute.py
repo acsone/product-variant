@@ -9,6 +9,7 @@ from odoo.addons import decimal_precision as dp
 
 class ProductConfiguratorAttribute(models.Model):
     _name = 'product.configurator.attribute'
+    _description = 'Product Configurator Attribute'
 
     owner_id = fields.Integer(
         string="Owner",
@@ -56,4 +57,3 @@ class ProductConfiguratorAttribute(models.Model):
                     ('product_tmpl_id', '=', self.product_tmpl_id.id),
                     ('product_attribute_value_id', '=', self.value_id.id)
                 ]).mapped('price_extra'))
-
