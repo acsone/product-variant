@@ -29,7 +29,7 @@ class ProductConfigurator(models.AbstractModel):
              "selected attributes values on sale price. eg. 200 price extra, "
              "1000 + 200 = 1200.")
     product_id = fields.Many2one(
-        string="Product",
+        string="Product Variant",
         comodel_name="product.product")
     name = fields.Char()
     can_create_product = fields.Boolean(

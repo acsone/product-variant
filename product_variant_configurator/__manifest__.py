@@ -26,5 +26,7 @@
         'views/inherited_product_template_views.xml',
         'views/inherited_product_product_views.xml',
         'views/inherited_product_category_views.xml',
+        'views/inherited_product_attribute_views.xml',
     ],
+    'post_init_hook': 'post_init_hook',
 }
