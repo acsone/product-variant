@@ -54,6 +54,6 @@ class ProductConfiguratorAttribute(models.Model):
         for record in self:
             record.price_extra = sum(self.env[
                 'product.template.attribute.value'].search([
-                    ('product_tmpl_id', '=', self.product_tmpl_id.id),
-                    ('product_attribute_value_id', '=', self.value_id.id)
+                    ('product_tmpl_id', '=', record.product_tmpl_id.id),
+                    ('product_attribute_value_id', '=', record.value_id.id)
                 ]).mapped('price_extra'))
