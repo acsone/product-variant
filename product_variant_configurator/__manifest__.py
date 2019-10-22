@@ -6,8 +6,7 @@
 
 {
     'name': 'Product Variant Configurator',
-    'summary': """
-        Provides an abstract model for product variant configuration.""",
+    'summary': "Provides an abstract model for product variant configuration.",
     'version': '12.0.1.0.0',
     'category': 'Product Variant',
     'license': 'AGPL-3',
@@ -28,5 +27,4 @@
         'views/inherited_product_category_views.xml',
         'views/inherited_product_attribute_views.xml',
     ],
-    'post_init_hook': 'post_init_hook',
 }

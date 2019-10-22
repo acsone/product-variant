@@ -107,6 +107,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'Category option template',
             'categ_id': self.category1.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -117,6 +118,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'categ_id': self.category1.id,
+            'no_create_variants': 'empty',
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
         # default behavior: one variant should be created
@@ -125,7 +127,6 @@ class TestProductVariantConfigurator(SavepointCase):
     def test_create_variants(self):
         tmpl = self.product_template.create({
             'name': 'Create variants template',
-            'no_create_variants': 'no',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -141,7 +142,6 @@ class TestProductVariantConfigurator(SavepointCase):
     def test_update_product_tempalte(self):
         tmpl = self.product_template.create({
             'name': 'Create variants template',
-            'no_create_variants': 'no',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -165,6 +165,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'Category option template',
             'categ_id': self.category2.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,
@@ -175,6 +176,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'No variants template',
             'categ_id': self.category2.id,
+            'no_create_variants': 'empty',
         })
         self.assertTrue(tmpl.no_create_variants == 'empty')
         self.assertEqual(len(tmpl.product_variant_ids), 1)
@@ -184,6 +186,7 @@ class TestProductVariantConfigurator(SavepointCase):
         tmpl = self.product_template.create({
             'name': 'Category option template',
             'categ_id': self.category1.id,
+            'no_create_variants': 'empty',
             'attribute_line_ids': [
                 (0, 0, {'attribute_id': self.attribute1.id,
                         'value_ids': [(6, 0, [self.value1.id,

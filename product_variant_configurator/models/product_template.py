@@ -12,9 +12,9 @@ class ProductTemplate(models.Model):
 
     no_create_variants = fields.Selection(
         [('yes', "Don't create them automatically"),
-         ('no', "Create them automatically"),
+         ('no', "Use Odoo's default variant management"),
          ('empty', 'Use the category value')],
-        string='Variant creation', required=True, default='empty',
+        string='Variant creation', required=True, default='no',
         help="This selection defines if variants for all attribute "
              "combinations are going to be created automatically at saving "
              "time.")
