@@ -74,7 +74,7 @@ class TestProductVariantConfigurator(SavepointCase):
                 "categ_id": cls.category1.id,
             }
         )
-        cls.product_template_empty_yes = cls.product_template.create(
+        cls.product_template_empty_yes = cls.product_template.new(
             {
                 "name": "Product template 3",
                 "no_create_variants": "empty",
@@ -264,7 +264,11 @@ class TestProductVariantConfigurator(SavepointCase):
         )
         self.assertEqual(
             product._get_product_description(
-                product.product_tmpl_id, product, product.attribute_value_ids
+                product.product_tmpl_id,
+                product,
+                product.product_template_attribute_value_ids.mapped(
+                    "product_attribute_value_id"
+                ),
             ),
             "Product template 1",
         )
@@ -276,7 +280,11 @@ class TestProductVariantConfigurator(SavepointCase):
         self.env.ref(group_id).write({"users": [(4, self.current_user.id)]})
         self.assertEqual(
             product._get_product_description(
-                product.product_tmpl_id, product, product.attribute_value_ids
+                product.product_tmpl_id,
+                product,
+                product.product_template_attribute_value_ids.mapped(
+                    "product_attribute_value_id"
+                ),
             ),
             "Product template 1",
         )
@@ -502,7 +510,7 @@ class TestProductVariantConfigurator(SavepointCase):
         result = product._get_product_attributes_values_dict()
         self.assertEqual(len(result), 1)
         self.assertEqual(
-            result[0], {"attribute_id": self.attribute1.id, "value_id": self.value1.id}
+            result[0], {"attribute_id": self.attribute1.id, "value_id": self.value1.id},
         )
 
     def test_get_product_attributes_values_text(self):
