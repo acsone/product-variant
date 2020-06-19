@@ -10,10 +10,7 @@
                 <!-- force using the form -->
                 <attribute name="editable" />
             </xpath>
-            <xpath
-                expr="//field[@name='order_line']/form/sheet/group"
-                position="before"
-            >
+            <xpath expr="//field[@name='order_line']/form/group[1]" position="before">
                 <group>
                     <field name="state" invisible="1" />
                     <!-- HACK: readonly condition is set with an `in` clause instead of a `not in` for allowing on new created lines to be writeable, as
