@@ -285,21 +285,17 @@ class TestProductVariantConfigurator(TransactionCase):
             "Product template 1",
         )
 
-    def test_onchange_product_tmpl_id(self):
+    def test_compute_product_id_configurator_domain(self):
         product = self.product_product.new(
             {"name": "Test product", "product_tmpl_id": self.product_template_yes.id}
         )
         product.product_tmpl_id = self.product_template_empty_yes
-        res = product._onchange_product_tmpl_id_configurator()
+        # res = product._onchange_product_tmpl_id_configurator()
         self.assertEqual(
-            res,
-            {
-                "domain": {
-                    "product_id": [
-                        ("product_tmpl_id", "=", self.product_template_empty_yes.id)
-                    ]
-                }
-            },
+            product.product_id_configurator_domain,
+            [
+                ("product_tmpl_id", "=", self.product_template_empty_yes.id)
+            ]
         )
 
     def test_templ_name_search(self):
@@ -398,7 +394,7 @@ class TestProductVariantConfigurator(TransactionCase):
             result = product._onchange_product_attribute_ids_configurator()
             self.assertTrue(
                 ("product_tmpl_id", "=", self.product_template_yes.id)
-                in result["domain"]["product_id"]
+                in product.product_id_configurator_domain
             )
 
     def test_onchange_product_attribute_ids_01(self):
@@ -431,7 +427,7 @@ class TestProductVariantConfigurator(TransactionCase):
         result = product._onchange_product_attribute_ids_configurator()
         self.assertTrue(
             ("product_tmpl_id", "=", self.product_template_yes.id)
-            in result["domain"]["product_id"]
+            in product.product_id_configurator_domain
         )
 
     def test_onchange_product_id_product_configurator(self):
