@@ -1,0 +1,1 @@
+odoo-addon-product-variant-configurator @ git+https://github.com/OCA/product-variant.git@refs/pull/404/head#subdirectory=product_variant_configurator
