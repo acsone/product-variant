@@ -26,7 +26,7 @@
                             />
                             <field
                                 name="selected_value_ids"
-                                attrs="{'required': [('required', '=', True)]}"
+                                required="required"
                                 widget="many2many_tags"
                                 domain="[('id', 'in', attribute_value_ids or [])]"
                                 options="{'no_create': True}"
