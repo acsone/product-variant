@@ -15,9 +15,7 @@ class ProductTemplate(models.Model):
     )
 
     def _get_all_variant_combinations(self):
-        lines_without_no_variants = (
-            self.valid_product_template_attribute_line_ids._without_no_variant_attributes()
-        )
+        lines_without_no_variants = self.valid_product_template_attribute_line_ids._without_no_variant_attributes()
         return itertools.product(
             *[
                 ptal.product_template_value_ids._only_active()
