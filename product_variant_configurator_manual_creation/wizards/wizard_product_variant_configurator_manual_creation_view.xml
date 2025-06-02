@@ -16,22 +16,22 @@
                         <field name="variants_to_create" />
                     </group>
                     <field name="line_ids" nolabel="1">
-                        <tree editable="top" create="false" delete="false">
+                        <list editable="top" create="false" delete="false">
                             <field name="attribute_id" readonly="1" force_save="1" />
                             <field name="required" readonly="1" force_save="1" />
                             <field
                                 name="attribute_value_ids"
                                 widget="many2many_tags"
-                                invisible="1"
+                                column_invisible="1"
                             />
                             <field
                                 name="selected_value_ids"
-                                attrs="{'required': [('required', '=', True)]}"
+                                required="required"
                                 widget="many2many_tags"
                                 domain="[('id', 'in', attribute_value_ids or [])]"
                                 options="{'no_create': True}"
                             />
-                        </tree>
+                        </list>
                     </field>
                 </sheet>
                 <footer>
