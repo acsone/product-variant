@@ -158,6 +158,6 @@ class WizardProductVariantConfiguratorManualCreationLines(models.TransientModel)
         relation="rel_wizard_line_manual_creation_selected_attributes_values",
         column1="wizard_line_id",
         column2="value_id",
-        string="Values",
+        string="Selected Values",
     )
     required = fields.Boolean(string="Required?", required=False)

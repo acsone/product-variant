@@ -10,9 +10,8 @@
                     name="%(wizard_product_variant_configurator_manual_creation_action)d"
                     type="action"
                     string="Create Pending Variants"
-                    attrs="{'invisible': [('has_pending_variants', '=', False)]}"
+                    invisible="not has_pending_variants"
                 />
-                <field name="has_pending_variants" invisible="1" />
             </button>
         </field>
     </record>

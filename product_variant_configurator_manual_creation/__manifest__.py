@@ -4,12 +4,15 @@
 {
     "name": "Product Variant Configurator Manual Creation",
     "summary": "Provides a wizards to make variants on demand",
-    "version": "15.0.1.0.1",
+    "version": "18.0.1.0.0",
     "category": "Product Variant",
     "license": "AGPL-3",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
-    "depends": ["product", "product_variant_configurator"],
+    "depends": [
+        "product",
+        "product_variant_configurator",
+    ],
     "data": [
         "security/ir.model.access.csv",
         "wizards/wizard_product_variant_configurator_manual_creation_view.xml",
