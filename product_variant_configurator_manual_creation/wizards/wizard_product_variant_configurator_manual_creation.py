@@ -119,7 +119,7 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
         if current_variants_to_create:
             variants_to_show |= product_model.create(current_variants_to_create)
         if variants_to_show:
-            action = self.env.ref("product.product_variant_action").read()[0]
+            action = self.env.ref("product.product_variant_action").sudo().read()[0]
             action.update(
                 {
                     "domain": [("id", "in", variants_to_show.ids)],
@@ -158,6 +158,6 @@ class WizardProductVariantConfiguratorManualCreationLines(models.TransientModel)
         relation="rel_wizard_line_manual_creation_selected_attributes_values",
         column1="wizard_line_id",
         column2="value_id",
-        string="Values",
+        string="Selected Values",
     )
     required = fields.Boolean(string="Required?", required=False)
