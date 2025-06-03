@@ -18,6 +18,6 @@
         "wizards/wizard_product_variant_configurator_manual_creation_view.xml",
         "views/product_template_view.xml",
     ],
-    "development_status": "Alpha",
+    "development_status": "Beta",
     "maintainers": ["ChrisOForgeFlow"],
 }
