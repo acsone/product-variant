@@ -41,7 +41,15 @@ class WizardProductVariantConfiguratorManualCreation(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         values = super().default_get(fields_list)
-        values["product_tmpl_id"] = self.env.context.get("active_id")
+        if self.env.context.get("active_model") == "product.template":
+            values["product_tmpl_id"] = self.env.context.get("active_id")
+        elif self.env.context.get("active_model") == "product.product":
+            product_tmpl_id = (
+                self.env["product.product"]
+                .browse(self.env.context.get("active_id"))
+                .product_tmpl_id.id
+            )
+            values["product_tmpl_id"] = product_tmpl_id
         return values
 
     @api.onchange("product_tmpl_id")

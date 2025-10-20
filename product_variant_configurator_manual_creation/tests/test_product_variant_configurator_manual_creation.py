@@ -58,7 +58,7 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
         )
         self.assertTrue(self.product_template1.has_pending_variants)
         variant_creation_wizard1 = self.wizard_variant_manual_creation.with_context(
-            active_id=self.product_template1.id
+            active_id=self.product_template1.id, active_model="product.template"
         ).create({})
         variant_creation_wizard1._onchange_product_tmpl()
         self.assertEqual(
@@ -79,7 +79,7 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
         )
 
         variant_creation_wizard2 = self.wizard_variant_manual_creation.with_context(
-            active_id=self.product_template1.id
+            active_id=self.product_template1.id, active_model="product.template"
         ).create({})
         variant_creation_wizard2._onchange_product_tmpl()
         self.assertEqual(
@@ -105,7 +105,7 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
         snd_variant = variants[1]
         snd_variant.active = False
         variant_creation_wizard3 = self.wizard_variant_manual_creation.with_context(
-            active_id=self.product_template1.id
+            active_id=self.product_template1.id, active_model="product.template"
         ).create({})
         variant_creation_wizard3._onchange_product_tmpl()
         self.assertEqual(
@@ -120,6 +120,74 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
         self.assertEqual(variant_creation_wizard1.variants_to_create, 1)
         variant_creation_wizard2.action_create_variants()
         self.assertTrue(snd_variant.active)
+
+    def test_product_attribute_manual_creation_from_variant(self):
+        """
+        Simulate the use of the wizard from a product.product
+        """
+        # create product with attribute and "Variant creation" option is
+        # set on "Don't create automatically"
+        self.product_template1 = self.product_template.create(
+            {"name": "Product template 1", "no_create_variants": "yes"}
+        )
+        self.attribute_line_model.with_context(check_variant_creation=True).create(
+            {
+                "product_tmpl_id": self.product_template1.id,
+                "attribute_id": self.attribute1.id,
+                "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+            }
+        )
+        self.assertEqual(self.product_template1.product_variant_count, 1)
+        variants = self.product_template1.product_variant_ids
+        self.assertEqual(
+            variants.product_template_attribute_value_ids.product_attribute_value_id.id,
+            False,
+        )
+        self.assertTrue(self.product_template1.has_pending_variants)
+        variant_creation_wizard1 = self.wizard_variant_manual_creation.with_context(
+            active_id=self.product_template1.id, active_model="product.template"
+        ).create({})
+        variant_creation_wizard1._onchange_product_tmpl()
+        self.assertEqual(
+            variant_creation_wizard1.line_ids.attribute_id.id, self.attribute1.id
+        )
+        variant_creation_wizard1.line_ids.write(
+            {
+                "selected_value_ids": [(6, 0, [self.value1.id])],
+                "attribute_value_ids": [(6, 0, [self.value1.id])],
+            }
+        )
+        self.assertEqual(variant_creation_wizard1.variants_to_create, 1)
+        variant_creation_wizard1.action_create_variants()
+        self.assertEqual(self.product_template1.product_variant_count, 1)
+        self.assertEqual(
+            variants.product_template_attribute_value_ids.product_attribute_value_id.id,
+            self.value1.id,
+        )
+
+        variant_creation_wizard2 = self.wizard_variant_manual_creation.with_context(
+            active_id=self.product_template1.product_variant_ids.id,
+            active_model="product.product",
+        ).create({})
+        variant_creation_wizard2._onchange_product_tmpl()
+        self.assertEqual(
+            variant_creation_wizard2.line_ids.attribute_id.id, self.attribute1.id
+        )
+        variant_creation_wizard2.line_ids.write(
+            {
+                "selected_value_ids": [(6, 0, [self.value2.id])],
+                "attribute_value_ids": [(6, 0, [self.value2.id])],
+            }
+        )
+        self.assertEqual(variant_creation_wizard1.variants_to_create, 1)
+        variant_creation_wizard2.action_create_variants()
+        self.assertEqual(self.product_template1.product_variant_count, 2)
+        variants = self.product_template1.product_variant_ids
+        self.assertEqual(
+            variants.product_template_attribute_value_ids.product_attribute_value_id.ids,
+            [self.value1.id, self.value2.id],
+        )
+        self.assertFalse(self.product_template1.has_pending_variants)
 
     def test_product_attribute_manual_creation_invalid_combination(self):
         """
@@ -153,7 +221,7 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
 
         # Create all the variants with the wizard
         variant_creation_wizard1 = self.wizard_variant_manual_creation.with_context(
-            active_id=self.product_template1.id
+            active_id=self.product_template1.id, active_model="product.template"
         ).create({})
         variant_creation_wizard1._onchange_product_tmpl()
         self.assertEqual(
@@ -202,7 +270,7 @@ class TestProductVariantConfiguratorManualCreation(TransactionCase):
         self.assertEqual(self.product_template1.product_variant_count, 3)
         # Try to re-create it using the wizard
         variant_creation_wizard2 = self.wizard_variant_manual_creation.with_context(
-            active_id=self.product_template1.id
+            active_id=self.product_template1.id, active_model="product.template"
         ).create({})
         variant_creation_wizard2._onchange_product_tmpl()
         variant_creation_wizard2.line_ids = [
