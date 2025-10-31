@@ -33,15 +33,15 @@ class ProductTemplate(models.Model):
         self,
         combination=False,
         product_id=False,
-        add_qty=1,
-        parent_combination=False,
+        add_qty=1.0,
+        uom_id=False,
         only_template=False,
     ):
         res = super()._get_combination_info(
             combination,
             product_id,
             add_qty,
-            parent_combination,
+            uom_id,
             only_template,
         )
         test_condition = not config["test_enable"] or (
